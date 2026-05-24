@@ -1,7 +1,8 @@
 const express=require('express');
 const app=express();
-const AuthRoutes=require('../src/Routes/auth.routes')
 const cookieParser = require("cookie-parser");
+const AuthRoutes=require('../src/Routes/auth.routes');
+const postRoutes=require('../src/Routes/postRoutes');
 
 app.use(express.json());
 app.use(cookieParser());
