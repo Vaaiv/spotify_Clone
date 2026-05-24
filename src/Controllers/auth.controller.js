@@ -26,9 +26,6 @@ async function registerUser(req,res){
       email: user.email,
       token: token
     });
-
-
-
 };
 
 module.exports={registerUser};

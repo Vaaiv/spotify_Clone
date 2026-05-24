@@ -1,9 +1,23 @@
 const mongoose=require('mongoose');
 
-const userSchema=new mongoose.Schema({ //define the structure of the data 
-    username : String,
-    email: string,
-    password: string,
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+  },
 });
 
 const userModel=mongoose.model("user", userSchema); //make that data to work 
