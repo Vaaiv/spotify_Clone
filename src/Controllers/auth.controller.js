@@ -17,6 +17,8 @@ async function registerUser(req,res){
          process.env.JWT_SECRET,
           { expiresIn: "7d"});
 
+    res.cookie("token", token);
+
     res.status(201).json({
       message:"user created succesfully",
       _id: user._id,
@@ -24,6 +26,8 @@ async function registerUser(req,res){
       email: user.email,
       token: token
     });
+
+
 
 };
 
