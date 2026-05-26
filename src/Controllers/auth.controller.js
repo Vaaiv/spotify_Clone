@@ -2,6 +2,8 @@ const userModel=require('../Models/user.model');
 
 const jwt=require('jsonwebtoken');
 
+const bcrypt = require('bcrypt'); 
+
 
 async function registerUser(req,res){
     const {username, email, password, role=user}=req.body;    //requested the user details from the frontend
