@@ -4,36 +4,49 @@ const jwt=require('jsonwebtoken');
 
 
 async function registerUser(req,res){
+    const {username, email, password, role=user}=req.body;    //requested the user details from the frontend
 
-    const {username , email, password}=req.body;
+    const isuserexists= await userModel.findOne({      
+        $or:[
+            {username},               //find if the user already exists or not 
+            {email}
+        ]
+    });
 
-    const existingUser = await User.findOne({ email });
 
-    if (existingUser) {
-        return res.status(409).json({
-             message: "User already exists"
-         });
+    if(isuserexists){
+        return res.status(409).json(
+            {message: "User already exists"}              // made a condition to check if the user exists or not 
+        );
     }
 
-    const user= await userModel.create({
-        username,
-        email,
-        password
-    });
+    const user=await userModel.create(
+        {
+            username,
+            email,                // registerd the user by creating the data for the user
+            password,
+            role
+        }
+    )
 
-    const token=jwt.sign({ id },
-         process.env.JWT_SECRET,
-          { expiresIn: "7d"});
+    const token=jwt.sign({
+        id:user._id,                         //created  the token for the user 
+        role: user.role,
+    }, process.env.JWT_SECRET)          
 
-    res.cookie("token", token);
+    res.cookies("token", token)              //saved the token into the cookie storage 
 
     res.status(201).json({
-      message:"user created succesfully",
-      _id: user._id,
-      name: user.username,
-      email: user.email,
-      token: token
-    });
+        message: "user created successfully",    
+        user:{
+            id: user._id,
+            username: user.username,              // responded to the backend that the user is created 
+            email: user.email,
+            role: user.role,
+        }
+    })
+    
+
 };
 
 module.exports={registerUser};
