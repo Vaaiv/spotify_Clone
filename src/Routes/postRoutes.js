@@ -52,5 +52,3 @@ Router.post("/create", async (req,res)=>{
 
 
 });
-
-mode

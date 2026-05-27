@@ -7,6 +7,6 @@ const postRoutes=require('../src/Routes/postRoutes');
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("api/auth", AuthRoutes);
+app.use("/api/auth", AuthRoutes);
 
 module.exports=app;
